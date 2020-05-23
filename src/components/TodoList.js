@@ -1,24 +1,17 @@
 import React from 'react';
-import CheckBox from './CheckBox';
-import TodoDelete from './TodoDelete';
+import TodoItem from './TodoItem';
 
 function TodoList({ onCheckTodoItem, todoItems, onDelete }) {
   return (
     <ul id="todo-list" className="todo-list">
-      {todoItems.map(todoItem => {
-        return (
-          <li className={todoItem.isCompleted && "completed"} key={Math.random()}>
-            <div className="view">
-              <CheckBox onCheck={() => onCheckTodoItem(todoItem._id)}
-                        isCompleted={todoItem.isCompleted}/>
-              <label className="label">{todoItem.content}</label>
-              <TodoDelete onDelete={() => onDelete(todoItem._id)}/>
-            </div>
-            <input className="edit" value="새로운 타이틀"/>
-          </li>
+      {todoItems.map(todoItem => (
+          <TodoItem todoItem={todoItem}
+                    onCheckTodoItem={onCheckTodoItem}
+                    onDelete={onDelete}
+                    key={todoItem._id}
+          />
         )
-      })
-      }
+      )}
     </ul>
   );
 }
