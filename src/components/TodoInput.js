@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+  return {
+    ...state,
+    [action.name]: action.value
+  };
+}
 
 function TodoInput({ onAdd }) {
-  const [input, setInput] = useState("");
+  const [state, dispatch] = useReducer(reducer, {
+    input: ''
+  });
+  const { input } = state;
 
   const changeInput = event => {
-    setInput(event.target.value);
-  }
+    dispatch(event.target);
+  };
 
   const onEnter = event => {
     if (event.key === "Enter") {
       onAdd(input);
       event.target.value = "";
     }
-  }
+  };
 
   return (
     <>
       <input id="new-todo-title" className="new-todo" placeholder="할일을 추가해 주세요" autoFocus
-             onChange={changeInput} onKeyPress={onEnter}/>
+             name="input" value={input} onChange={changeInput} onKeyPress={onEnter}/>
     </>
   );
 }
